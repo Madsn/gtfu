@@ -12,8 +12,7 @@ def gtfu_handler(request):
     except:
         return HttpResponse("Who?? Go fuck yourself.", status=404)
     if sleeper.password == password:    
-        sleeper.pwron = True
-        sleeper.save()
+        sleeper.setPwrOn()
         return HttpResponse("Fine, I'll wake the fucker up, now get lost", status=202)#202-accepted
     else:
         return HttpResponse("Wrong password shithead, better luck next time", status=403)
@@ -29,16 +28,13 @@ def gtfu_poll(request):
     if sleeper.pwron:
         # time to wake up
         # first reset the state
-        sleeper.pwron = False
-        sleeper.save()
+        sleeper.resetState()
         return HttpResponse("1-Fuck yes! Wake that bitch up", status=202) #202-accepted
     if sleeper.restart:
-        sleeper.restart = False
-        sleeper.save()
+        sleeper.resetState()
         return HttpResponse("2-That motherfucker needs a reboot!", status=202)
     if sleeper.pwroff:
-        sleeper.pwroff = False
-        sleeper.save()
+        sleeper.resetState()
         return HttpResponse("3-Let the motherfucker burn!", status=202)
     else:
         return HttpResponse("0-Fuck off!", status=200) #200-OK
@@ -62,8 +58,7 @@ def gtfu_restart(request):
     except:
         return HttpResponse("You fucking retard, you forgot to tell me your name or pass", status=403)#forbidden
     sleeper = Sleeper.objects.get(name=name)
-    sleeper.restart = True
-    sleeper.save()
+    sleeper.setRestart()
     return HttpResponse("Whatever fucker, I'll tell him to reboot from u.", status=202)
     
 def gtfu_off(request):
@@ -74,6 +69,5 @@ def gtfu_off(request):
     except:
         return HttpResponse("You fucking retard, you forgot to tell me your name or pass", status=403)#forbidden
     sleeper = Sleeper.objects.get(name=name)
-    sleeper.pwroff = True
-    sleeper.save()
+    sleeper.setPwrOff()
     return HttpResponse("Yeah! Kill that fucker!", status=202)
