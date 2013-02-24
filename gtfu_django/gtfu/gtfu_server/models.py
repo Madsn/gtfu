@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.encoding import smart_unicode
 
 class Sleeper(models.Model):
     name = models.CharField(max_length=20, unique=True)
@@ -6,6 +7,9 @@ class Sleeper(models.Model):
     pwron = models.BooleanField(default=False)
     restart = models.BooleanField(default=False)
     pwroff = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return smart_unicode(self.name)
 
     def resetState(self):
         self.pwron = False
