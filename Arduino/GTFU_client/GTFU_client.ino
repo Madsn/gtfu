@@ -16,22 +16,25 @@
       reply format:  --- 200 OK or 405 forbidden
  */
 
-#include <EEPROM.h>
 #include <SPI.h>
 #include <Ethernet.h>
-#include <EthernetUdp.h>
 #include <avr/wdt.h>
 
-#define USERNAME "root"
-#define PASSWORD "1234"
+#define USERNAME "balls"
+#define PASSWORD "jabadoo"
 #define LOOP_SECONDS 10
 #define VERSION "1" // protocol version string.
 
+#define PWR_BUTTON_PIN 3
+#define MOBO_PWR_PIN 2
+#define LED_PIN 13
+#define SERVERURL "zpc.dk"
+byte server[] = { 85, 17, 23, 70 };
+byte ip[] = { 192, 168, 0, 10 };
 // Enter a MAC address for your controller below.
 // Newer Ethernet shields have a MAC address printed on a sticker on the shield
-byte ownMAC[MAC_SIZE] = {  0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x02 }; // our own MAC address
-char hexMAC[HEX_MAC_SIZE];
-char serverName[] = "85.17.23.70"; // the server we connect to, in order to know which macs to send in our wake-on-lan packet
+byte ownMAC[6] = {  0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x02 }; // our own MAC address
+//char serverName[] = "zpc.dk"; // the server we connect to, in order to know which macs to send in our wake-on-lan packet
 
 EthernetClient serverClient;
 
@@ -43,6 +46,13 @@ typedef struct GET_REPLY_STRUCT {
 */
 
 void setup() {
+  
+  pinMode(PWR_BUTTON_PIN, INPUT);
+  pinMode(MOBO_PWR_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(MOBO_PWR_PIN, HIGH);
+  digitalWrite(LED_PIN, LOW);
+  
  // Open serial communications and wait for port to open:
   Serial.begin(9600);
    while (!Serial) {
@@ -50,9 +60,12 @@ void setup() {
   }
   
   // start the Ethernet connection:
+  /*
+  Serial.println("Fetching IP via DHCP");
   while (Ethernet.begin(ownMAC) == 0)
     Serial.println("Failed to configure Ethernet using DHCP. Retrying...");
-
+    */
+  Ethernet.begin(ownMAC, ip);
   // give the Ethernet shield a second to initialize:
   delay(1000);
 }
@@ -62,45 +75,54 @@ void setup() {
 void loop()
 {
   
-  boolean ok;
-  if (serverClient.connect(serverName, 80)) {
+  int action;
+  if (serverClient.connect(SERVERURL, 80)) {
     Serial.println("Connected");
-    serverClient.print("GET /api/poll/?user=" USERNAME "&password=" PASSWORD);
+    serverClient.print("GET http://zpc.dk/api/poll/?name=balls&password=jabadoo");
     serverClient.print(" HTTP/1.0\r\n\r\n");
 
-    while(!serverClient.available())
+    while(!serverClient.available()){
       delay(500);
+      Serial.println("waiting for available data");
+    }
     Serial.println("Got server response");
-    if (dropHeader(serverClient)) {
+    if (dropHeader(serverClient, false)) {
       if(serverClient.available()) {
-        //get_reply = (GET_REPLY)malloc(sizeof(GET_REPLY)
-        //ok = takeMAC(receivedMAC, serverClient);
-        
+        action = parseReply(serverClient, true);
         serverClient.stop();
-        if (ok) {
-          fillHexMac(receivedMAC, hexMAC);
-          Serial.print("  Got MAC address from server: ");
-          Serial.println(hexMAC);
-          makePkt(receivedMAC, magicpacket);
-          sendPkt(magicpacket, wolClient);
-          Serial.println("  Magic packets sent");
-          sendConfirm(hexMAC, serverClient);
-          Serial.println("  MAC Confirmed");
-        } else
-          Serial.println("couldn't parse MAC address from server response");
-      } else {
-        serverClient.stop();
-        Serial.println("  No MAC address from server");
+        switch (action)
+          {
+            case 0:
+              // do nothing
+              Serial.println("do nothing");
+              break;
+            case 1:
+              // wake
+              powerOn();
+              break;
+            case 2:
+              // restart
+              restart();
+              break;
+            case 3:
+              // turn off
+              powerOff();
+              break;
+        }
       }
-    } else
-      Serial.println("Couldn't parse header from server");
-  } else
+    } else {
+        Serial.println("Couldn't parse header from server");
+        serverClient.stop();
+      }
+  } else {
     Serial.println("Connection failed");
+  }
   delay(LOOP_SECONDS * 1000);
 }
 
 
 // -------------------------------------- PARSE GET REPLY ----------------------------------- //
+/*
 boolean parseGetReply(GET_REPLY *reply, EthernetClient client)
 {
   if (dropHeader(client))
@@ -119,46 +141,36 @@ boolean parseGetReply(GET_REPLY *reply, EthernetClient client)
   else
     return false;
 }
-
+*/
 // ------------------------------------- /PARSE GET REPLY ----------------------------------- //
 
 
 // ------------------------------------- PARSE REPLY --------------------------------------- //
-// take the string "XXXXXXXXXXXX\n" from the client, where mac is a 6-byte (12-nibble) hex number, and fill the mac array with these bytes
-boolean takeMAC(byte *mac, EthernetClient client)
+// 
+int parseReply(EthernetClient client, boolean verbose)
 {
   char c;
-  byte hi, low;
-  int i, j;
-  for (i = 0; i < 6; i++)
-    if (client.available())
-    {
-      hi = client.read();
-      if (client.available())
-      {
-        low = client.read();
-        if (validHexChar(hi) && validHexChar(low))
-          mac[i] = (byte)(16 * hexVal(hi) + hexVal(low));
-        else
-        {
-          Serial.print("invalid hex char: ");
-          Serial.print((char)hi);
-          Serial.println();
-          Serial.print((char)low);
-          Serial.println();
-          return false;
-        }  
-      } 
-      else       
-        return false;
+  int action = 0;
+  if(client.available()){
+    c = client.read();
+    action = int(c)-48;
+    if (verbose){
+      Serial.print("Action:");
+      Serial.println(action);
+      Serial.println("reply:"); 
+      Serial.print(c);  
     }
-    else
-      return false;
-  return (client.available() && client.read() == '\n');
+  }
+  while(client.available()){
+    c = client.read();       
+    if(verbose)
+      Serial.print(c);
+  }
+  return action;
 }
 
 // just check for two '\n' chars, separated by another char. This will be the "\r\n\r\n" marker beginning separating the header from the body
-boolean dropHeader(EthernetClient client)
+boolean dropHeader(EthernetClient client, boolean verbose)
 {
   boolean finishHeader = false;
   char c;
@@ -166,11 +178,15 @@ boolean dropHeader(EthernetClient client)
   if (client.available())
   {
     c = client.read();
+    if(verbose)
+      Serial.print(c);
     while (client.available() && !finishHeader)
     {
       prev[1] = prev[0];
       prev[0] = c;
       c = client.read();
+      if(verbose)
+        Serial.print(c);
       finishHeader = prev[1] == '\n' && c == '\n';
     }
   }
@@ -184,7 +200,7 @@ boolean dropHeader(EthernetClient client)
 // Expected parameters - username, password, clear (list of MAC's, separated by "x")
 boolean sendConfirm(char *hex, EthernetClient client)
 {
-  if (client.connect(serverName, 8000)) {
+  if (client.connect(SERVERURL, 8000)) {
     char *rsp = "POST /api/wol/confirm/ HTTP/1.0\r\nHost: 192.168.1.100\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 55";
     char *data = "username=" USERNAME "&password=" PASSWORD "&clear=";
     char *endline = "\r\n";
@@ -202,3 +218,35 @@ boolean sendConfirm(char *hex, EthernetClient client)
 }
 // -------------------------------------------- /SEND CONFIRM -------------------------------------//
 
+// -------------------------------------------- START PC ------------------------------------------//
+void powerOn()
+{
+  Serial.println("Powering on");
+  digitalWrite(MOBO_PWR_PIN, LOW); // low = button pressed
+  digitalWrite(LED_PIN, HIGH);
+  delay(1000);
+  digitalWrite(LED_PIN, LOW);
+  digitalWrite(MOBO_PWR_PIN, HIGH); 
+}
+// -------------------------------------------- /START PC -----------------------------------------//
+
+// -------------------------------------------- RESTART PC ----------------------------------------//
+void restart()
+{
+  powerOff();
+  delay(6000); // wait 
+  powerOn();
+}
+// -------------------------------------------- /RESTART PC ---------------------------------------//
+
+// -------------------------------------------- SHUTDOWN PC ---------------------------------------//
+void powerOff()
+{
+  Serial.println("Shutting down");
+  digitalWrite(MOBO_PWR_PIN, LOW); // low = button pressed
+  digitalWrite(LED_PIN, HIGH);
+  delay(10000); // hold down power button
+  digitalWrite(LED_PIN, LOW);
+  digitalWrite(MOBO_PWR_PIN, HIGH);
+}
+// -------------------------------------------- /SHUTDOWN PC --------------------------------------//

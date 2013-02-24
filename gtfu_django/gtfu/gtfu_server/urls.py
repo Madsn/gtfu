@@ -18,4 +18,5 @@ urlpatterns = patterns('',
     url(r'^api/gtfu/', 'gtfu_server.view.gtfu_handler'),
     url(r'^api/poll/', 'gtfu_server.view.gtfu_poll'),
     url(r'^api/add/', 'gtfu_server.view.gtfu_add'),
+    url(r'^api/restart/', 'gtfu_server.view.gtfu_restart'),
 )
