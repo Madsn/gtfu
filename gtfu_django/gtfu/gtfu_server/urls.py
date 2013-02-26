@@ -20,4 +20,5 @@ urlpatterns = patterns('',
     url(r'^api/add/', 'gtfu_server.view.gtfu_add'),
     url(r'^api/restart/', 'gtfu_server.view.gtfu_restart'),
     url(r'^api/stfo/', 'gtfu_server.view.gtfu_off'),
+    url(r'^api/stfos/', 'gtfu_server.view.gtfu_soft_off'),
 )

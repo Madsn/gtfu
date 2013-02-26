@@ -71,3 +71,14 @@ def gtfu_off(request):
     sleeper = Sleeper.objects.get(name=name)
     sleeper.setPwrOff()
     return HttpResponse("Yeah! Kill that fucker!", status=202)
+
+def gtfu_soft_off(request):
+    name = None
+    try:
+        name = request.GET['name']
+        password = request.GET['password']
+    except:
+        return HttpResponse("You fucking retard, you forgot to tell me your name or pass", status=403)#forbidden
+    sleeper = Sleeper.objects.get(name=name)
+    sleeper.setSoftOff() #TODO, test if different timing needed for soft off and pwron
+    return HttpResponse("Soft? You pussy.", status=202)

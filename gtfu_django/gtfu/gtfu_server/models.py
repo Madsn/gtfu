@@ -23,6 +23,13 @@ class Sleeper(models.Model):
         self.pwroff = False
         self.save()
 
+    def setSoftOff(self): #TODO: soft off flag needed?
+                          #or is timing acceptable
+        self.pwron = True
+        self.restart = False
+        self.pwroff = False
+        self.save()
+
     def setPwrOff(self):
         self.pwron = False
         self.restart = False
