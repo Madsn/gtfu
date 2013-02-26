@@ -2,30 +2,17 @@
 <YACodeBlocks ya-version="71" lang-version="17">
 <Pages><Page page-name=" " page-color="237 245 211" page-width="1920" page-height="1600" page-drawer="My Definitions" >
 <PageBlocks>
-<BlockStub><StubParentName>startVal</StubParentName><StubParentGenus>def</StubParentGenus><Block id="808" genus-name="getterGlobal" >
-<Location><X>643</X><Y>257</Y></Location>
-<Label>startVal</Label>
-<Plug><BlockConnector connector-kind="plug" connector-type="poly" init-type="poly" label="" position-type="single" con-block-id="811" ></BlockConnector></Plug>
-</Block>
-</BlockStub>
-<Block id="815" genus-name="get-start-value" >
-<Location><X>297</X><Y>133</Y></Location>
-<Label>get start value</Label>
-<Plug><BlockConnector connector-kind="plug" connector-type="poly" init-type="poly" label="" position-type="single" con-block-id="800" ></BlockConnector></Plug>
-</Block>
-<Block id="800" genus-name="def" >
-<Location><X>177</X><Y>133</Y></Location>
-<Label>startVal</Label>
+<Block id="799" genus-name="Button-Click" has-focus="yes" >
+<Location><X>126</X><Y>225</Y></Location>
+<Label>CancelBtn.Click</Label>
 <Sockets num-sockets="1" >
-<BlockConnector connector-kind="socket" connector-type="poly" init-type="poly" label="as" position-type="single" con-block-id="815" ></BlockConnector>
+<BlockConnector connector-kind="socket" connector-type="cmd" init-type="cmd" label="do" is-indented="yes" position-type="single" con-block-id="831" ></BlockConnector>
 </Sockets>
 </Block>
-<Block id="795" genus-name="Button-Click" >
-<Location><X>397</X><Y>221</Y></Location>
-<Label>ConfirmBtn.Click</Label>
-<Sockets num-sockets="1" >
-<BlockConnector connector-kind="socket" connector-type="cmd" init-type="cmd" label="do" is-indented="yes" position-type="single" con-block-id="811" ></BlockConnector>
-</Sockets>
+<Block id="831" genus-name="close-screen" >
+<Location><X>154</X><Y>258</Y></Location>
+<Label>close screen</Label>
+<BeforeBlockId>799</BeforeBlockId>
 </Block>
 <Block id="811" genus-name="close-screen-with-value" >
 <Location><X>425</X><Y>254</Y></Location>
@@ -35,24 +22,37 @@
 <BlockConnector connector-kind="socket" connector-type="poly" init-type="poly" label="result" position-type="single" con-block-id="808" ></BlockConnector>
 </Sockets>
 </Block>
-<Block id="799" genus-name="Button-Click" >
-<Location><X>120</X><Y>220</Y></Location>
-<Label>CancelBtn.Click</Label>
+<Block id="795" genus-name="Button-Click" >
+<Location><X>397</X><Y>221</Y></Location>
+<Label>ConfirmBtn.Click</Label>
 <Sockets num-sockets="1" >
-<BlockConnector connector-kind="socket" connector-type="cmd" init-type="cmd" label="do" is-indented="yes" position-type="single" con-block-id="831" ></BlockConnector>
+<BlockConnector connector-kind="socket" connector-type="cmd" init-type="cmd" label="do" is-indented="yes" position-type="single" con-block-id="811" ></BlockConnector>
 </Sockets>
 </Block>
-<Block id="831" genus-name="close-screen" >
-<Location><X>148</X><Y>253</Y></Location>
-<Label>close screen</Label>
-<BeforeBlockId>799</BeforeBlockId>
+<Block id="800" genus-name="def" >
+<Location><X>177</X><Y>133</Y></Location>
+<Label>startVal</Label>
+<Sockets num-sockets="1" >
+<BlockConnector connector-kind="socket" connector-type="poly" init-type="poly" label="as" position-type="single" con-block-id="815" ></BlockConnector>
+</Sockets>
 </Block>
+<Block id="815" genus-name="get-start-value" >
+<Location><X>297</X><Y>133</Y></Location>
+<Label>get start value</Label>
+<Plug><BlockConnector connector-kind="plug" connector-type="poly" init-type="poly" label="" position-type="single" con-block-id="800" ></BlockConnector></Plug>
+</Block>
+<BlockStub><StubParentName>startVal</StubParentName><StubParentGenus>def</StubParentGenus><Block id="808" genus-name="getterGlobal" >
+<Location><X>643</X><Y>257</Y></Location>
+<Label>startVal</Label>
+<Plug><BlockConnector connector-kind="plug" connector-type="poly" init-type="poly" label="" position-type="single" con-block-id="811" ></BlockConnector></Plug>
+</Block>
+</BlockStub>
 </PageBlocks>
 </Page>
 
 </Pages><YoungAndroidMaps><YoungAndroidUuidMap>
-<YoungAndroidUuidEntry uuid="-974248674" component-id="CancelBtn" component-genus="Button" component-version="4" ></YoungAndroidUuidEntry>
 <YoungAndroidUuidEntry uuid="-1324485884" component-id="ConfirmBtn" component-genus="Button" component-version="4" ></YoungAndroidUuidEntry>
+<YoungAndroidUuidEntry uuid="-974248674" component-id="CancelBtn" component-genus="Button" component-version="4" ></YoungAndroidUuidEntry>
 <YoungAndroidUuidEntry uuid="-1886204236" component-id="Label1" component-genus="Label" component-version="2" ></YoungAndroidUuidEntry>
 <YoungAndroidUuidEntry uuid="0" component-id="Confirm" component-genus="Form" component-version="0" ></YoungAndroidUuidEntry>
 <YoungAndroidUuidEntry uuid="627397245" component-id="HorizontalArrangement1" component-genus="HorizontalArrangement" component-version="2" ></YoungAndroidUuidEntry>
