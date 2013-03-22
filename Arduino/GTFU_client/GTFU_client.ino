@@ -39,13 +39,17 @@ void setup() {
    while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
-  
+  initializeEthernet();
+}
+
+void initializeEthernet()
+{
   // start the Ethernet connection:
   Serial.println("Fetching IP via DHCP");
   while (Ethernet.begin(ownMAC) == 0)
     Serial.println("Failed to configure Ethernet using DHCP. Retrying...");
     
-  //Ethernet.begin(ownMAC, ip);
+  // Ethernet.begin(ownMAC, ip);
   // give the Ethernet shield a second to initialize:
   delay(1000);
 }
@@ -92,6 +96,8 @@ void loop()
               powerOff();
               break;
         }
+      } else {
+        serverClient.stop();
       }
     } else {
         Serial.println("Couldn't parse header from server");
@@ -99,7 +105,25 @@ void loop()
       }
   } else {
     Serial.println("Connection failed");
+    if (serverClient.connect("google.com", 80) == false) {
+      int renewResult; 
+      int attempts = 0;
+      do {
+        Serial.println("attempting to renew IP via dhcp");
+        renewResult = Ethernet.maintain(); // renew dhcp
+        Serial.print("renewal result code: ");
+        Serial.println(renewResult);
+        attempts++;
+        delay(10000);
+      }while(renewResult != 1 && renewResult != 3 && attempts < 20); //http://arduino.cc/en/Reference/EthernetMaintain
+      if (attempts >= 20)
+        initializeEthernet();
+    }else {
+      delay(1000);
+      serverClient.stop();
+    }
   }
+  serverClient.stop();
   delay(LOOP_SECONDS * 1000);
 }
 
