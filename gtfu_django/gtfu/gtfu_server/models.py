@@ -6,11 +6,12 @@ from django.utils.timezone import utc
 class Sleeper(models.Model):
     name = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=20)
+    # TODO: rewrite pwron/restart/pwroff to a choices field
     pwron = models.BooleanField(default=False)
     restart = models.BooleanField(default=False)
     pwroff = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now=True, auto_now_add=True)
-    clear_after_minutes = models.IntegerField(default=15)
+    clear_after_minutes = models.IntegerField(default=15, help_text="Server checks for old flags every 5 minutes")
 
     def __unicode__(self):
         return smart_unicode(self.name)
