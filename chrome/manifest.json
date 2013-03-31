@@ -1,0 +1,16 @@
+{
+    "name": "GTFU",
+    "description" :"Get The F#*! Up!",
+    "version": "0.1",
+    "manifest_version": 2,
+    "permissions": 
+    [   
+        "webRequest",
+        "http://*.zpc.dk/*",
+        "storage",
+        "notifications"
+    ],
+    "browser_action": {"default_icon": "16x16.png","default_popup": "popup.html"},
+    //"content_security_policy": "script-src 'self' https://*.google-analytics.com; object-src 'self'",
+    "minimum_chrome_version": "26"
+}
