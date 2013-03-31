@@ -1,23 +1,32 @@
 var SERVER = "http://zpc.dk/api/gtfu/";
-var gotResponse = function(){
-  alert("wooop");
+var gotResponse = function(responseText){
+	var notification = window.webkitNotifications.createNotification(
+		'16x16.png',
+		'Server response',
+		responseText
+		);
+	notification.show();
+	setTimeout(function(){
+		notification.cancel();
+	}, 3000);
 };
 var sendRequest = function(cmdstate) {
-  var xmlHttp = new XMLHttpRequest();
-  var name = document.getElementById('name').value;
-  var pass = document.getElementById('pass').value;
-  var url = SERVER+"?name="+name+"&password="+pass+"&cmdstate="+cmdstate;
-  xmlHttp.addEventListener("load", function(){
-  	alert("response: " + xmlHttp.responseText);
-  });
-  xmlHttp.addEventListener("error", function(){
-  	alert("response: " + xmlHttp.responseText);
-  });
-  xmlHttp.addEventListener("abort", function(){
-  	alert("response: " + xmlHttp.responseText);
-  });
-  xmlHttp.open("GET", url, false);
-  xmlHttp.send();
+	var xmlHttp = new XMLHttpRequest();
+	var name = document.getElementById('name').value;
+	var pass = document.getElementById('pass').value;
+	var url = SERVER+"?name="+name+"&password="+pass+"&cmdstate="+cmdstate;
+	xmlHttp.addEventListener("load", function(){
+		gotResponse(xmlHttp.responseText);
+		//alert("response: " + xmlHttp.responseText);
+	});
+	xmlHttp.addEventListener("error", function(){
+		alert("error: " + xmlHttp.responseText);
+	});
+	xmlHttp.addEventListener("abort", function(){
+		alert("abort: " + xmlHttp.responseText);
+	});
+	xmlHttp.open("GET", url, false);
+	xmlHttp.send();
 };
 
 var sendPowerOn			= function(){sendRequest(1)}
