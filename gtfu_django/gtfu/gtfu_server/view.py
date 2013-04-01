@@ -10,7 +10,7 @@ def gtfu_handler(request):
         name = request.GET['name']
         password = request.GET['password']
         sleeper = Sleeper.objects.get(name=name)
-        // old clients send no cmdstate
+        # old clients send no cmdstate
         cmdstate = request.GET.get('cmdstate', 1)
     except:
         return HttpResponse("Who?? Go fuck yourself.", status=404)
@@ -27,7 +27,7 @@ def gtfu_handler(request):
         elif cmdstate == 4:
             sleeper.setRestart()
             return HttpResponse("Whatever fucker, I'll tell him to reboot from u.", status=202)
-        else
+        else:
             return HttpResponse("Unknown cmdstate");
     else:
         return HttpResponse("Wrong password shithead, better luck next time", status=403)
