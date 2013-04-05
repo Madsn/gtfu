@@ -49,6 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (val.pass != undefined)
             document.getElementById('pass').value = val.pass;
     });
+    /* The reason we need to attach all these events
+     * in this file rather than in the html, is that
+     * chrome does not allow this code in the html
+     * for security reasons I guess?
+     */
     document.querySelector('#powerOn').addEventListener(
       'click', sendPowerOn);
     document.querySelector('#softOff').addEventListener(
@@ -62,9 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#name').addEventListener(
       'paste', setName);
     document.querySelector('#pass').addEventListener(
-      'keyup', setPass); 
+      'keyup', setPass);
     document.querySelector('#pass').addEventListener(
-      'paste', setPass); 
+      'paste', setPass);
 });
 
 
