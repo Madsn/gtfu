@@ -1,1 +1,1 @@
-../../apache2/bin/restart
+/home/madsn/webapps/gtfu_django/apache2/bin/restart
