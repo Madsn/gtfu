@@ -1,3 +1,0 @@
-#!/bin/bash
-
-LD_LIBRARY_PATH=/home/madsn/webapps/gtfu_django/apache2/lib /home/madsn/webapps/gtfu_django/apache2/bin/httpd.worker -f /home/madsn/webapps/gtfu_django/apache2/conf/httpd.conf -k start
