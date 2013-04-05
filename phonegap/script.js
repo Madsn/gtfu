@@ -1,16 +1,6 @@
 var SERVER = "http://zpc.dk/api/gtfu/";
 var gotResponse = function(responseText){
-    /*
-    var notification = window.webkitNotifications.createNotification(
-        '16x16.png',
-        'Server response',
-        responseText
-        );
-    notification.show();
-    setTimeout(function(){
-        notification.cancel();
-    }, 3000);
-*/
+    // TODO: Best way to notify on smartphones via phonegap?
     console.log(responseText);
 };
 var sendRequest = function(cmdstate) {
@@ -42,11 +32,11 @@ var sendPowerOn         = function(){sendRequest(1)}
 var storage = window.localStorage;
 document.addEventListener('DOMContentLoaded', function() {
     storage.get('name', function(val){
-        if (val.name != undefined)
+        if (val.name !== undefined)
             document.getElementById('name').value = val.name;
     });
     storage.get('pass', function(val){
-        if (val.pass != undefined)
+        if (val.pass !== undefined)
             document.getElementById('pass').value = val.pass;
     });
     /* The reason we need to attach all these events
