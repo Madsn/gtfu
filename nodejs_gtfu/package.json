@@ -1,9 +1,9 @@
 {
   "name": "GTFU",
-  "version": "0.0.1",
+  "version": "0.0.1-2",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node app.js"
   },
   "dependencies": {
     "express": "3.1.0",
@@ -11,5 +11,9 @@
     "stylus": "*",
     "mysql": "latest",
     "orm": "latest"
+  },
+  "subdomain": "madsn-nodejs_gtfu",
+  "engines": {
+    "node": "0.8"
   }
 }
