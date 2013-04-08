@@ -1,0 +1,36 @@
+Server Software:        nginx
+Server Hostname:        zpc.dk
+Server Port:            80
+
+Document Path:          /
+Document Length:        246 bytes
+
+Concurrency Level:      100
+Time taken for tests:   4.321 seconds
+Complete requests:      1000
+Failed requests:        0
+Write errors:           0
+Total transferred:      563196 bytes
+HTML transferred:       246000 bytes
+Requests per second:    231.41 [#/sec] (mean)
+Time per request:       432.129 [ms] (mean)
+Time per request:       4.321 [ms] (mean, across all concurrent requests)
+Transfer rate:          127.28 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        7    8   0.6      8      12
+Processing:    12  411 254.4    288    1026
+Waiting:       12  411 254.4    288    1026
+Total:         19  418 254.4    296    1034
+
+Percentage of the requests served within a certain time (ms)
+  50%    296
+  66%    385
+  75%    551
+  80%    644
+  90%   1013
+  95%   1020
+  98%   1021
+  99%   1025
+ 100%   1034 (longest request)

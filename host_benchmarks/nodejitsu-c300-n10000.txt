@@ -1,0 +1,37 @@
+Server Software:
+Server Hostname:        madsn-socketio.jit.su
+Server Port:            80
+
+Document Path:          /
+Document Length:        2389 bytes
+
+Concurrency Level:      300
+Time taken for tests:   8.665 seconds
+Complete requests:      10000
+Failed requests:        0
+Write errors:           0
+Non-2xx responses:      10000
+Total transferred:      24960000 bytes
+HTML transferred:       23890000 bytes
+Requests per second:    1154.09 [#/sec] (mean)
+Time per request:       259.946 [ms] (mean)
+Time per request:       0.866 [ms] (mean, across all concurrent requests)
+Transfer rate:          2813.09 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       75   89 112.7     75    1093
+Processing:    76  165  96.5    135     696
+Waiting:       76  165  96.5    135     696
+Total:        150  254 168.3    211    1772
+
+Percentage of the requests served within a certain time (ms)
+  50%    211
+  66%    238
+  75%    261
+  80%    280
+  90%    371
+  95%    474
+  98%    611
+  99%   1352
+ 100%   1772 (longest request)
