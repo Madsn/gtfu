@@ -15,7 +15,7 @@
 #define LED_PIN 13
 
 #define SERVERURL "zpc.dk"
-#define NAME "odin"
+#define NAME "Odin"
 #define PASSWORD "gtfu"
 #define VERBOSE true
 //byte server[] = { 85, 17, 23, 70 };
