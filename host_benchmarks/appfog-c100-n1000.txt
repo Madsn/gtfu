@@ -1,0 +1,36 @@
+Server Software:        nginx
+Server Hostname:        noptech-node1.aws.af.cm
+Server Port:            80
+
+Document Path:          /
+Document Length:        53 bytes
+
+Concurrency Level:      100
+Time taken for tests:   1.633 seconds
+Complete requests:      1000
+Failed requests:        0
+Write errors:           0
+Total transferred:      307242 bytes
+HTML transferred:       53000 bytes
+Requests per second:    612.22 [#/sec] (mean)
+Time per request:       163.340 [ms] (mean)
+Time per request:       1.633 [ms] (mean, across all concurrent requests)
+Transfer rate:          183.69 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       78   78   0.2     78      79
+Processing:    78   83   6.4     80     105
+Waiting:       78   83   6.4     80     105
+Total:        156  161   6.5    158     183
+
+Percentage of the requests served within a certain time (ms)
+  50%    158
+  66%    160
+  75%    161
+  80%    163
+  90%    172
+  95%    178
+  98%    181
+  99%    181
+ 100%    183 (longest request)
