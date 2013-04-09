@@ -31,6 +31,6 @@ io.sockets.on('connection', function (socket) {
     console.log(data.msg);
     setTimeout(function(){
       socket.emit('ping', { msg: "random number: " + Math.random()});
-    }, 1000);
+    }, 500);
   });
 });
