@@ -10,4 +10,5 @@ app.router.get('/', function () {
   this.res.json({ 'hello': 'world' })
 });
 
-app.start(3000);
+var port = process.env.PORT || 5000;
+app.start(port);
