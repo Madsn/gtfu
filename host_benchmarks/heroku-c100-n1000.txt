@@ -1,0 +1,36 @@
+Server Software:
+Server Hostname:        quiet-beyond-9344.herokuapp.com
+Server Port:            80
+
+Document Path:          /
+Document Length:        6 bytes
+
+Concurrency Level:      100
+Time taken for tests:   1.824 seconds
+Complete requests:      1000
+Failed requests:        0
+Write errors:           0
+Total transferred:      283369 bytes
+HTML transferred:       6006 bytes
+Requests per second:    548.14 [#/sec] (mean)
+Time per request:       182.435 [ms] (mean)
+Time per request:       1.824 [ms] (mean, across all concurrent requests)
+Transfer rate:          151.69 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       76   77   0.4     77      81
+Processing:    79   96  18.8     89     181
+Waiting:       79   96  18.8     89     181
+Total:        155  173  18.8    166     257
+
+Percentage of the requests served within a certain time (ms)
+  50%    166
+  66%    171
+  75%    175
+  80%    180
+  90%    199
+  95%    218
+  98%    231
+  99%    243
+ 100%    257 (longest request)
