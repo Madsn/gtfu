@@ -11,7 +11,7 @@ def gtfu_handler(request):
         password = request.GET['password']
         sleeper = Sleeper.objects.get(name=name)
         # old clients send no cmdstate
-        cmdstate = request.GET.get('cmdstate', 1)
+        cmdstate = int(request.GET.get('cmdstate', 1))
     except:
         return HttpResponse("Who?? Go fuck yourself.", status=404)
     if sleeper.password == password:
@@ -75,7 +75,7 @@ def gtfu_restart(request):
     sleeper = Sleeper.objects.get(name=name)
     sleeper.setRestart()
     return HttpResponse("Whatever fucker, I'll tell him to reboot from u.", status=202)
-    
+
 def gtfu_off(request):
     name = None
     try:
