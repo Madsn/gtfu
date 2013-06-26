@@ -1,0 +1,36 @@
+Server Software:        Apache/2.2.15
+Server Hostname:        node-varyc.rhcloud.com
+Server Port:            80
+
+Document Path:          /health/
+Document Length:        2 bytes
+
+Concurrency Level:      100
+Time taken for tests:   4.453 seconds
+Complete requests:      1000
+Failed requests:        0
+Write errors:           0
+Total transferred:      281000 bytes
+HTML transferred:       2000 bytes
+Requests per second:    224.57 [#/sec] (mean)
+Time per request:       445.293 [ms] (mean)
+Time per request:       4.453 [ms] (mean, across all concurrent requests)
+Transfer rate:          61.63 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       76   79   3.8     77      97
+Processing:    86  352  92.2    343     585
+Waiting:       86  352  92.2    343     585
+Total:        163  431  92.3    421     662
+
+Percentage of the requests served within a certain time (ms)
+  50%    421
+  66%    475
+  75%    490
+  80%    499
+  90%    572
+  95%    578
+  98%    587
+  99%    659
+ 100%    662 (longest request)
