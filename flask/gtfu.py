@@ -1,4 +1,4 @@
-from flask import Flask, requests, make_response
+from flask import Flask, request, make_response
 from datetime import datetime, timedelta
 app = Flask(__name__)
 
@@ -99,5 +99,4 @@ def controller_entry_point():
 
 user = User()
 if __name__ == "__main__":
-    app.debug = True
     app.run()
