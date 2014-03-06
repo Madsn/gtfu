@@ -45,15 +45,15 @@ class User:
             return make_response("Fine, I'll wake the fucker up, now get lost", 202) #202-accepted
         elif cmdstate == 2:
             user["pwron"] = 1
-            return make_response("Soft? You pussy.", status=202)
+            return make_response("Soft? You pussy.", 202)
         elif cmdstate == 3:
             user["pwroff"] = 1
-            return make_response("Yeah! Kill that fucker!", status=202)
+            return make_response("Yeah! Kill that fucker!", 202)
         elif cmdstate == 4:
             user["restart"] = 1
-            return make_response("Whatever fucker, I'll tell him to reboot from u.", status=202)
+            return make_response("Whatever fucker, I'll tell him to reboot from u.", 202)
         else:
-            return make_response("Unknown cmdstate");
+            return make_response("Unknown cmdstate", 404);
 
          
 def get_poll_reply(userinfo): 
