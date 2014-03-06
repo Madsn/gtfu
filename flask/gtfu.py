@@ -94,7 +94,7 @@ def controller_entry_point():
     password = request.args.get("password", None)
     userinfo = user.login(name, password)
     if userinfo is not None:
-        cmdstate = request.args.get("cmdstate", 1) # default to 1, first version of clients don't send a cmdstate
+        cmdstate = int(request.args.get("cmdstate", 1)) # default to 1, first version of clients don't send a cmdstate
         return user.update_cmdstate_and_get_response(userinfo, cmdstate)
     else:
         return make_response("Who?? Go fuck yourself.", 404)
